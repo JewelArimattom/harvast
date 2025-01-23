@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 const NavBar = () => {
+  const [visible, setVisible] = React.useState(false)
+
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
       <h2 className='text-2xl font-bold text-gray-800 md:text-3xl cursor-pointer '>HARVAST</h2>
@@ -42,10 +44,34 @@ const NavBar = () => {
         <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" className='w-5 cursor-pointer min-w-5 ' alt="" />
         <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
         </Link>
-        <img src="https://img.icons8.com/?size=100&id=CmEF51FjGPYD&format=png&color=000000" className=' w-5 cursor-pointer sm:hidden 'alt=""/>
+        <img onClick={() => setVisible(!visible)} src="https://img.icons8.com/?size=100&id=CmEF51FjGPYD&format=png&color=000000" className=' w-5 cursor-pointer sm:hidden 'alt=""/>
 
       </div>
-
+     {/* mobile nav */} 
+      <div className={`${visible ? 'block' : 'hidden'} absolute top-0 left-0 w-full h-full bg-white z-20`}>
+        <div className='flex flex-col text-gray-700'>
+          <div onClick={() => setVisible(!visible)} className='flex items-center gap-4 p-3'>
+            <img src="https://img.icons8.com/?size=100&id=37214&format=png&color=000000" className='w-5 cursor-pointer rotate-180 ' alt="" />
+            <p className='cursor-pointer'>Back</p>
+          </div>
+          <NavLink onClick={() => setVisible(!visible)} to={'/'} className='flex flex-col items-center gap-1 hover:text-red-500' >
+            <p>HOME</p>
+            <hr className='w-2/4 border-none h-0.5 bg-gray-700' />
+          </NavLink>
+          <NavLink onClick={() => setVisible(!visible)} to={'/collection'} className='flex flex-col items-center gap-1 hover:text-red-500' >
+            <p>COLLECTION</p>
+            <hr className='w-2/4 border-none h-0.5 bg-gray-700' />
+          </NavLink>
+          <NavLink onClick={() => setVisible(!visible)} to={'/about'} className='flex flex-col items-center gap-1 hover:text-red-500' >
+            <p>ABOUT</p>
+            <hr className='w-2/4 border-none h-0.5 bg-gray-700' />
+          </NavLink>
+          <NavLink onClick={() => setVisible(!visible)} to={'/contact'} className='flex flex-col items-center gap-1 hover:text-red-500' >
+            <p>CONTACT</p>
+            <hr className='w-2/4 border-none h-0.5 bg-gray-700' />
+          </NavLink>
+        </div>
+      </div>
     </div>
   )
 }
