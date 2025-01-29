@@ -5,7 +5,9 @@ const NavBar = () => {
 
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
+      <Link to={'/'}>
       <h2 className='text-2xl font-bold text-gray-800 md:text-3xl cursor-pointer '>HARVAST</h2>
+      </Link>
 
       <ul className='hidden sm:flex gap-5 text-gray-700 text-sm'>
 

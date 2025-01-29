@@ -10,6 +10,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import PlaceOrder from './pages/PlaceOrder'
 import NavBar from './components/NavBar'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/product/:productId' element={<Product />} />
 
       </Routes>
+      <Footer />
     </div>
   )
 }

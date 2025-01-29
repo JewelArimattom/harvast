@@ -1,17 +1,33 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from './Title'
+import ProductItem from './Productitem';
 
-function LatestColletion() {
+const LatestColletion =() => {
 
-    const {products} = useContext(ShopContext)
+  const { products } = useContext(ShopContext);
+  const [latestProduts, setLatestProducts] = useState([]);
+  useEffect(() => {
+    setLatestProducts(products.slice(0, 10));
+  }, [])
+
   return (
     <div className='my-10'>
       <div className='text-center py-8 text-3xl'>
-        <Title text1={"LATEST"} text2={"COLLETION"}/>
+        <Title text1={"LATEST"} text2={"COLLETION"} />
         <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>awbndabfdavfbasvfasvfaaaaaaaaaaaaaaaaaaaaaaaashvuaufh</p>
       </div>
-      
+
+
+
+      {/* product */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-8'>
+        {
+         latestProduts.map((item, index)=>(
+          <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
+         ))
+        }
+      </div> 
     </div>
   )
 }
