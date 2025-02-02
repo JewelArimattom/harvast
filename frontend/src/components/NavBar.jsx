@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { ShopContext } from '../context/ShopContext';
 const NavBar = () => {
   const [visible, setVisible] = React.useState(false)
+  const {setShowSearch} = useContext(ShopContext);
 
   return (
     <div className='bg-white flex items-center justify-between py-5 font-medium'>
@@ -30,7 +32,7 @@ const NavBar = () => {
       </ul>
 
       <div className='flex items-center gap-6'>
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" className='w-5  cursor-pointer ' alt=""/>
+        <img onClick={() => setShowSearch(true)} src="https://cdn-icons-png.flaticon.com/512/149/149852.png" className='w-5  cursor-pointer ' alt=""/>
         <div className='group relative'>
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" className='w-5 cursor-pointer ' alt=""  />
           <div className='absolute pt-4 right-0 bg-white hidden group-hover:block dropdown-menu '>
