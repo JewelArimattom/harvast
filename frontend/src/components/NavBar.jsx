@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 const NavBar = () => {
   const [visible, setVisible] = React.useState(false)
-  const {setShowSearch} = useContext(ShopContext);
+  const {setShowSearch,getCartCount} = useContext(ShopContext);
 
   return (
     <div className='bg-white flex items-center justify-between py-5 font-medium'>
@@ -44,9 +44,9 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-        <Link to='/cart' className='relative'>
+        <Link  to='/cart' className='relative'>
         <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" className='w-5 cursor-pointer min-w-5 ' alt="" />
-        <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
+        <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>{getCartCount()}</p>
         </Link>
         <img onClick={() => setVisible(!visible)} src="https://img.icons8.com/?size=100&id=CmEF51FjGPYD&format=png&color=000000" className=' w-5 cursor-pointer sm:hidden 'alt=""/>
 
