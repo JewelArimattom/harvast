@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
+import CartTotal from '../components/CartTotal';
 
 
 function Cart() {
-  const{products,currency,cartItems} = useContext(ShopContext);
+  const{products,currency,cartItems,updateQuantity, navigate} = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
 
@@ -41,12 +42,21 @@ function Cart() {
                     </div>
                   </div>
                 </div>
-                <input className='border max-w-10 sm:w-20 px-1 sm:px-2 py-1' type="number" min={1} value={item.quantity} />
+                <input onChange={(e) => e.target.value === "" || e.target.value === "0" ? null : updateQuantity(item._id,item.size,Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number"  min={1} defaultValue={item.quantity} />
+                <img onClick={() => updateQuantity(item._id,item.size,-1)} className='w-4 mr-4 cursor-pointer' src="https://img.icons8.com/?size=100&id=8329&format=png&color=000000" alt="" />
               </div>
             )
           }
           )
 }
+      </div>
+      <div className='flex justify-end my-20'>
+        <div className='w-full sm:w-[450px]'>
+          <CartTotal />
+          <div className='mt-4'>
+          <button onClick={() => navigate("/placeorder")} className='bg-black text-white w-full py-2'>PLACE ORDER</button>
+          </div>
+        </div>
       </div>
     </div>
   )
