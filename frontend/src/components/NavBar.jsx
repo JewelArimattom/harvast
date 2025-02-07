@@ -34,7 +34,7 @@ const NavBar = () => {
       <div className='flex items-center gap-6'>
         <img onClick={() => setShowSearch(true)} src="https://cdn-icons-png.flaticon.com/512/149/149852.png" className='w-5  cursor-pointer ' alt=""/>
         <div className='group relative'>
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" className='w-5 cursor-pointer ' alt=""  />
+         <Link to='/login'> <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" className='w-5 cursor-pointer ' alt=""  /> </Link>
           <div className='absolute pt-4 right-0 bg-white hidden group-hover:block dropdown-menu '>
             <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-white text-gray-700 rounded'>
               <p className='cursor-pointer hover:text-black'>My Profile</p>

@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
+import { ShopContext } from '../context/ShopContext';
 
 const PlaceOrder = () => {
 
   const [method, setMethod] = useState("cod");
+  const {navigate} = useContext(ShopContext);
 
   return (
     <div className='flex flex-col sm:flex-row justify-between gap-4 pt-5  sm:pt-14 min-h-[80vh] border-t'>
@@ -13,20 +15,20 @@ const PlaceOrder = () => {
           <Title text1={"YOUR"} text2={"ADDRESS"} />
         </div>
         <div className='flex gap-3'>
-          <input required type="text" placeholder='First Name' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input required type="text" placeholder='Last Name' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='First Name' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='Last Name' className='border border-black rounded-md px-3 py-2 w-full' />
         </div>
-        <input required type="text" placeholder='Address' className='border border-black rounded-md px-3 py-2 w-full' />
-        <input required type="text" placeholder='Address Line 2' className='border border-black rounded-md px-3 py-2 w-full' />
+        <input  type="text" placeholder='Address' className='border border-black rounded-md px-3 py-2 w-full' />
+        <input  type="text" placeholder='Address Line 2' className='border border-black rounded-md px-3 py-2 w-full' />
         <div className='flex gap-3'>
-          <input required type="text" placeholder='City' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input required type="text" placeholder='State' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input required type="text" placeholder='Pin Code' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='City' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='State' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='Pin Code' className='border border-black rounded-md px-3 py-2 w-full' />
         </div>
-        <input  required type="text" placeholder='Country' className='border border-black rounded-md px-3 py-2 w-full' />
+        <input   type="text" placeholder='Country' className='border border-black rounded-md px-3 py-2 w-full' />
         <div className='flex gap-3'>
-          <input required type="text" placeholder='Phone Number' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input required type="text" placeholder='Email' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='Phone Number' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input  type="text" placeholder='Email' className='border border-black rounded-md px-3 py-2 w-full' />
         </div>
       </div>
     {/* right side */}
@@ -52,7 +54,7 @@ const PlaceOrder = () => {
             </div>
           </div>
           <div className='w-full text-end mt-8 '>
-            <button className='bg-black text-white px-16 py-3 text-sm '>Place Order</button>
+            <button onClick={()=>navigate('/orders')} className='bg-black text-white px-16 py-3 text-sm '>Place Order</button>
           </div>
         </div>
       </div>
