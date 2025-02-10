@@ -8,9 +8,7 @@ const Footer = () => {
             {/* <img src="" alt="" /> */}
             <h2 className=' text-2xl font-bold text-black md:text-3xl cursor-pointer mb-5 '>HARVAST</h2>
             <p className='w-full md:w-2/3 text-gray-500'>
-            asdasdsadasdasdasdasdad
-            asdasdadadaasdasdasdadssadasdasdasdasd adsadadasdadasdas
-            dasadadsadadasasdasdasd wafafafafafafsafgvasgdfvasdsadgtsadsafdvf asghdfsaydfsatfdaysftasydfyasdffvdasyfv
+            At Harvast, we bring you the rich, authentic flavors of Kerala’s finest spices, straight from nature to your kitchen. Nestled in the heart of India's spice capital, we are committed to delivering fresh, pure, and aromatic spices sourced directly from local farmers.
             </p>
         </div>
         <div>
@@ -25,7 +23,7 @@ const Footer = () => {
         <div>
             <p className='text-x1 font-medium md-5 text-black '>GET IN TOUCH</p>
             <ul className='text-gray-500 flex flex-col gap-1'>
-                <li>+1-000-000-0000</li>
+                <li>+91 9061336064</li>
                 <li>HARVAST@gmail.com</li>
                 
             </ul>

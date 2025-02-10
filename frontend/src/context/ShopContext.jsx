@@ -63,6 +63,7 @@ const ShopContextProvider = (props) => {
         return totalCount;
     }
 
+
     useEffect(() => {
         console.log(cartItems);
     }, [cartItems])
@@ -74,6 +75,7 @@ const ShopContextProvider = (props) => {
                 if(cartItems[items][item]>0){
                     let productData = products.find((product) => product._id === items);
                     totalAmound += (productData.price * cartItems[items][item]);
+                    
                 }
             }
         }

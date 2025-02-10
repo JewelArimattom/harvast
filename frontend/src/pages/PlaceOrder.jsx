@@ -15,20 +15,20 @@ const PlaceOrder = () => {
           <Title text1={"YOUR"} text2={"ADDRESS"} />
         </div>
         <div className='flex gap-3'>
-          <input  type="text" placeholder='First Name' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input  type="text" placeholder='Last Name' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required  type="text" placeholder='First Name' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required type="text" placeholder='Last Name' className='border border-black rounded-md px-3 py-2 w-full' />
         </div>
-        <input  type="text" placeholder='Address' className='border border-black rounded-md px-3 py-2 w-full' />
-        <input  type="text" placeholder='Address Line 2' className='border border-black rounded-md px-3 py-2 w-full' />
+        <input required type="text" placeholder='Address' className='border border-black rounded-md px-3 py-2 w-full' />
+        <input required type="text" placeholder='Address Line 2' className='border border-black rounded-md px-3 py-2 w-full' />
         <div className='flex gap-3'>
-          <input  type="text" placeholder='City' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input  type="text" placeholder='State' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input  type="text" placeholder='Pin Code' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required type="text" placeholder='City' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required type="text" placeholder='State' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required type="text" placeholder='Pin Code' className='border border-black rounded-md px-3 py-2 w-full' />
         </div>
-        <input   type="text" placeholder='Country' className='border border-black rounded-md px-3 py-2 w-full' />
+        <input required  type="text" placeholder='Country' className='border border-black rounded-md px-3 py-2 w-full' />
         <div className='flex gap-3'>
-          <input  type="text" placeholder='Phone Number' className='border border-black rounded-md px-3 py-2 w-full' />
-          <input  type="text" placeholder='Email' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required type="text" placeholder='Phone Number' className='border border-black rounded-md px-3 py-2 w-full' />
+          <input required type="text" placeholder='Email' className='border border-black rounded-md px-3 py-2 w-full' />
         </div>
       </div>
     {/* right side */}

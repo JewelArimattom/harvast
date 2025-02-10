@@ -16,7 +16,7 @@ const LatestColletion =() => {
     <div className='my-10'>
       <div className='text-center py-8 text-3xl'>
         <Title text1={"LATEST"} text2={"COLLETION"} />
-        <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>awbndabfdavfbasvfasvfaaaaaaaaaaaaaaaaaaaaaaaashvuaufh</p>
+        <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>Join us in celebrating the legacy of Kerala’s spices, where tradition meets purity in every pinch.</p>
       </div>
 
 

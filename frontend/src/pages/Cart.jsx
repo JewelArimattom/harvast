@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal';
+import { toast } from 'react-toastify';
 
 
 function Cart() {
-  const{products,currency,cartItems,updateQuantity, navigate} = useContext(ShopContext);
+  const{products,currency,cartItems,updateQuantity, navigate, getCartAmount} = useContext(ShopContext);
 
   const [cartData, setCartData] = useState([]);
 
@@ -54,7 +55,7 @@ function Cart() {
         <div className='w-full sm:w-[450px]'>
           <CartTotal />
           <div className='mt-4'>
-          <button onClick={() => navigate("/placeorder")} className='bg-black text-white w-full py-2'>PLACE ORDER</button>
+          <button onClick={() => getCartAmount() <= 500 ? toast.error("Minimum Order Value is Rs. 500") : navigate("/placeorder")} className='bg-black text-white w-full py-2'>PLACE ORDER</button>
           </div>
         </div>
       </div>

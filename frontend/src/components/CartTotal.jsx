@@ -13,6 +13,8 @@ const CartTotal = () => {
       <div className='text-2xl'>
           <Title text1={"TOTAL"} text2={"PRICE"} />
       </div>
+      <p >{getCartAmount() <= 500 ?<p className={`text-sm text-red-500 bg-red-100 p-2 mt-2 `}
+      >"Minimum Order Value is Rs. 500 "</p>: " "}</p>
       <div className='flex flex-col gap-2 mt-2 text-sm'>
         <div className='flex justify-between'>
           <p>Subtotal</p>
@@ -26,7 +28,7 @@ const CartTotal = () => {
         <hr />   
         <div className='flex justify-between'>
           <p>Total</p>
-          <p>{currency} { getCartAmount() === 0 ? 0 : getCartAmount() + deliveryFee}.00</p>
+          <p>{currency}  { getCartAmount() === 0 ? 0 : getCartAmount() + deliveryFee}.00</p>
         </div>
       </div>
     </div>
