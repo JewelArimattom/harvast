@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
+
+@import "tailwindcss";
+
+* {
+    font-family: 'Outfit';
+}
+.active {
+    background-color: #ffebf5;
+    border-color: #ff0000;
+}
+
+select ,input,textarea{
+    border: 1px solid #916464;
+    outline-color: #ff0000 ;
+    border-radius: 4px;
+}

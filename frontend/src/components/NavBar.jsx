@@ -3,7 +3,14 @@ import { Link, NavLink } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 const NavBar = () => {
   const [visible, setVisible] = React.useState(false)
-  const {setShowSearch,getCartCount} = useContext(ShopContext);
+  const {setShowSearch,getCartCount,navigate,token,setToken,setCartItems} = useContext(ShopContext);
+
+  const handleLogout = () => {
+    navigate('/login')
+    setToken('')
+    localStorage.removeItem('token')
+    setCartItems([])
+  }
 
   return (
     <div className='bg-white flex items-center justify-between py-5 font-medium'>
@@ -34,15 +41,16 @@ const NavBar = () => {
       <div className='flex items-center gap-6'>
         <img onClick={() => setShowSearch(true)} src="https://cdn-icons-png.flaticon.com/512/149/149852.png" className='w-5  cursor-pointer ' alt=""/>
         <div className='group relative'>
-         <Link to='/login'> <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" className='w-5 cursor-pointer ' alt=""  /> </Link>
-          <div className='absolute pt-4 right-0 bg-white hidden group-hover:block dropdown-menu '>
+         <img onClick={() => token ? null : navigate('/login')} src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" className='w-5 cursor-pointer ' alt=""  /> 
+          {/*down menu */}
+          {token && <div className='absolute pt-4 right-0 bg-white hidden group-hover:block dropdown-menu '>
             <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-white text-gray-700 rounded'>
               <p className='cursor-pointer hover:text-black'>My Profile</p>
-              <p className='cursor-pointer hover:text-black'>Orders</p>
-              <p className='cursor-pointer hover:text-black'>Logo Out</p>
+              <p onClick={() => navigate('/orders')} className='cursor-pointer hover:text-black'>Orders</p>
+              <p onClick={handleLogout} className='cursor-pointer hover:text-black'>Logo Out</p>
 
             </div>
-          </div>
+          </div>}
         </div>
         <Link  to='/cart' className='relative'>
         <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" className='w-5 cursor-pointer min-w-5 ' alt="" />

@@ -35,7 +35,7 @@ const Collection = () => {
 
   useEffect(() => {
     applayFilter();
-  }, [category,search,showSearch])
+  }, [category,search,showSearch,products])
 
 
 

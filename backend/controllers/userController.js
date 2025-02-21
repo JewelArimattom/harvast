@@ -71,7 +71,6 @@ const registerUser = async (req, res) => {
     }
 
 } 
-
 //get admin login
 const adminLogin = async (req, res) => {
 

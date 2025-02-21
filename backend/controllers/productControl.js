@@ -25,7 +25,7 @@ const addProduct = async (req, res) => {
             description,
             category,
             sizes : JSON.parse(sizes),
-            images:imagesUrl,
+            image:imagesUrl,
             date : Date.now(),
             oldPrice : Number(oldPrice),
         }
@@ -36,7 +36,7 @@ const addProduct = async (req, res) => {
 
         res.status(200).json({ success: true, message: "Product added successfully" });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: "Something went wrong"  });
     }
 }
 
@@ -57,7 +57,7 @@ const removeProduct = async (req, res) => {
         await productModel.findByIdAndDelete(req.body.id);
         res.status(200).json({ success: true, message: "Product removed successfully" });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: "not working" });
     }
 }
 
