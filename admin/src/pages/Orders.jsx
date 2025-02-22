@@ -14,7 +14,7 @@ const Orders = ({ token }) => {
     try {
       const res = await axios.post(backendUrl + "/api/order/list", {}, { headers: { token } })
       if (res.data.success) {
-        setOrders(res.data.orders);
+        setOrders(res.data.orders.reverse());
       }
       else {
         toast.error(res.data.message);
@@ -23,6 +23,22 @@ const Orders = ({ token }) => {
       console.log(error);
     }
   };
+
+  const statusHandler = async (event,orderId) => {
+     try {
+      const res = await axios.post(backendUrl + "/api/order/status", {orderId,status : event.target.value}, {headers : {token}});
+      if (res.data.success) {
+        toast.success(res.data.message);
+       await featchAllOrders();
+      }
+      else {
+        toast.error(res.data.message);
+      }
+     } catch (error) {
+      
+     }
+  }
+
   useEffect(() => {
     featchAllOrders();
   }, [token]);
@@ -60,8 +76,8 @@ const Orders = ({ token }) => {
               <p>Date : {new Date(order.date).toDateString()}</p>
             </div>
             <p >{currency} {order.amount}</p>
-            <select className='border-2 p-2 rounded '>
-              <option value="Order Placed">Processing</option>
+            <select onChange={(e) => statusHandler(e,order._id)} value={order.status} className='border-2 p-2 rounded '>
+              <option value="Order Placed">Order Placed</option>
               <option value="Shipped">Shipped</option>
               <option value="Delivered">Delivered</option>
               <option value="Cancelled">Cancelled</option>

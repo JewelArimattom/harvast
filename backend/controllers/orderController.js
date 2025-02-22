@@ -52,7 +52,13 @@ const userOrders = async (req, res) => {
 
 // update order status
 const updateOrderStatus = async (req, res) => {
-    
+   try {
+    const {orderId, status} = req.body;
+    await orderModel.findByIdAndUpdate(orderId, {status});
+    res.status(200).json({success: true, message: "Order status updated successfully"});
+   } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+   } 
 }
 
 export { placeOrder, allOrders, userOrders, updateOrderStatus };
