@@ -6,7 +6,16 @@ const Footer = () => {
       <div className='flex flex-col sm:grid grid-cols-[3fr,1fr,1fr] gap-14 my-10 mt-40 text-sm'>
         <div>
             {/* <img src="" alt="" /> */}
-            <h2 className=' text-2xl font-bold text-black md:text-3xl cursor-pointer mb-5 '>HARVAST</h2>
+            <h2 className=' text-2xl font-bold text-black md:text-2xl cursor-pointer mb-5 '>
+        <font>H</font>
+        <font>A</font>
+        <font>R</font>
+        <font>V</font>
+        <font className='text-red-600 lg:text-3xl'>A</font>
+        <font>S</font>
+        <font>T</font>
+
+            </h2>
             <p className='w-full md:w-2/3 text-gray-500'>
             At Harvast, we bring you the rich, authentic flavors of Kerala’s finest spices, straight from nature to your kitchen. Nestled in the heart of India's spice capital, we are committed to delivering fresh, pure, and aromatic spices sourced directly from local farmers.
             </p>

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 
 
+
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
   const {token, setToken,navigate,backendUrl} = useContext(ShopContext);
@@ -13,11 +14,20 @@ const Login = () => {
   const [password,setPassword] = useState("");
 
 
+  const passwordValidation = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (regex.test(password)) {
+      
+    } else {
+      toast.error("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+      return false;
+    }
+  }
   const onSubmitHandler = async (event) =>{
     event.preventDefault()
     try {
       if (currentState === "Sign up") {
-        const response = await axios.post(backendUrl + '/api/user/register',{name,email,password})
+        const response = await axios.post(backendUrl + '/api/user/register', {name,email,password});
        if (response.data.success) {
         setToken(response.data.token);
         localStorage.setItem('token' , response.data.token)
@@ -27,7 +37,7 @@ const Login = () => {
        }
        
       }else{
-        const response = await axios.post(backendUrl + '/api/user/login', {email, password})
+        const response = await axios.post(backendUrl + '/api/user/login', {email, password});
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token' , response.data.token)
@@ -39,7 +49,6 @@ const Login = () => {
       }
       
     } catch (error) {
-      toast.error("Invalid credentials please try with another email or password");
       //toast.error(error.message);
       console.log(error);
     }
@@ -60,7 +69,7 @@ const Login = () => {
       </div>
       {currentState === "Login" ?'': <input onChange={(e) => setName(e.target.value)} value={name} type="text" className='w-full border border-gray-400  px-3 py-2 ' placeholder='Name' required/> }
       <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" className='w-full border border-gray-400  px-3 py-2 ' placeholder='Email' required/>
-      <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" className='w-full border border-gray-400  px-3 py-2 ' placeholder='Password' required/>
+      <input onChange={(e) => setPassword(e.target.value)}  value={password} type="password" className='w-full border border-gray-400  px-3 py-2 ' placeholder='Password' required/>
       <div className='flex justify-between w-full text-sm mt-[-8px] '>
         <p className='cursor-pointer hover:underline'>Forgot Password ?</p>
         {

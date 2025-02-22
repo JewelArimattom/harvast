@@ -25,6 +25,10 @@ const PlaceOrder = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
+      if(!token){
+        navigate('/login');
+        toast.error("Please login to place an order");
+      }
       let orderItems = [];
       for (const items in cartItems) {
         for (const item in cartItems[items]) {
@@ -47,6 +51,8 @@ const PlaceOrder = () => {
         //cash on delivery
         case "cod":
           const res = await axios.post(backendUrl + "/api/order/place", orderData, { headers: { token } });
+         
+
           if (res.data.success) {
             toast.success("Order placed successfully");
             setCartItems({});

@@ -15,7 +15,16 @@ const NavBar = () => {
   return (
     <div className='bg-white flex items-center justify-between py-5 font-medium'>
       <Link to={'/'}>
-      <h2 className='text-2xl font-bold text-gray-800 md:text-3xl cursor-pointer '>HARVAST</h2>
+      <h2 className='text-2xl font-bold text-black md:text-3xl cursor-pointer '>
+        <font>H</font>
+        <font>A</font>
+        <font>R</font>
+        <font>V</font>
+        <font className='text-red-600 lg:text-4xl'>A</font>
+        <font>S</font>
+        <font>T</font>
+      </h2>
+      
       </Link>
 
       <ul className='hidden sm:flex gap-5 text-gray-700 text-sm'>

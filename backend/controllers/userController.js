@@ -51,9 +51,7 @@ const registerUser = async (req, res) => {
         if (!validator.isEmail(email)) {
             return res.status(400).json({ success: false, message: "Invalid email" });
         }
-        if (!validator.isStrongPassword(password)) {
-            return res.status(400).json({ success: false, message: "Password is not strong enough . Please use Capital letter, small letter, number and special character in password" });
-        }
+       
 
         //hash password
         const salt = await bcrypt.genSalt(10);
