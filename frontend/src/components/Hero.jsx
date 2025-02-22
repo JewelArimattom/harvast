@@ -22,7 +22,7 @@ const Hero = () => {
 
             </div>
             {/* right */}
-            <img className='w-full sm:w-1/2 ' src="https://drive.google.com/file/d/1EkMErrzCXPMRJDedmjlqS3lcC-rAZTgk/view" alt="" />
+            <img className='w-full sm:w-1/2 ' src="https://iili.io/3HCFR8N.png" alt="" />
         </div>
         </Link>
     )
