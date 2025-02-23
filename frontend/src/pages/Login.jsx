@@ -33,7 +33,7 @@ const Login = () => {
         localStorage.setItem('token' , response.data.token)
          toast.success(response.data.message);
        }else{
-         toast.error(response.data.message);
+         toast.error("Email already exists");
        }
        
       }else{
@@ -43,7 +43,7 @@ const Login = () => {
           localStorage.setItem('token' , response.data.token)
           toast.success(response.data.message);
         }else{
-          toast.error(response.data.message);
+          toast.error("Invalid credentials Check your email and password");
         }
 
       }
