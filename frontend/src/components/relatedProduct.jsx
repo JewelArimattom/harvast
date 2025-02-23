@@ -8,7 +8,8 @@ const RelatedProduct = ({category}) => {
     const [relatedProducts, setRelatedProducts] = useState([]);  
 
     const reloadpage = () => {
-        window.location.reload();
+                window.location.replace(window.location.href);
+
     }
 
     useEffect(() => {
