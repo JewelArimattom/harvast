@@ -51,6 +51,13 @@ const Login = () => {
     } catch (error) {
       //toast.error(error.message);
       console.log(error);
+      {
+        if (currentState === "Sign up") {
+          toast.error("Email already exists");
+        }else{
+          toast.error("Invalid credentials Check your email and password");
+        }
+      }
     }
 
   }
