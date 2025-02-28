@@ -1,44 +1,38 @@
-
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { backendUrl, currency } from '../App'
+import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
 
 const List = () => {
-
   const [list, setList] = useState([])
 
   const fetchList = async () => {
     try {
-      const res = await axios.get(backendUrl + '/api/product/list' , {headers : {token : localStorage.getItem('token')}})
+      const res = await axios.get(backendUrl + '/api/product/list', { headers: { token: localStorage.getItem('token') } })
 
-    if (res.data.success) {
-      setList(res.data.products)
-    }
-    else {
-      toast.error(res.data.message)
-    }
-
+      if (res.data.success) {
+        setList(res.data.products)
+      } else {
+        toast.error(res.data.message)
+      }
     } catch (error) {
       toast.error(error.message)
     }
-
   }
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.post(backendUrl + '/api/product/remove',{id} , {headers : {token : localStorage.getItem('token')}})
+      const res = await axios.post(backendUrl + '/api/product/remove', { id }, { headers: { token: localStorage.getItem('token') } })
       if (res.data.success) {
         toast.success("Product removed successfully")
         await fetchList()
-      }
-      else {
+      } else {
         toast.error("Product not removed")
       }
     } catch (error) {
-        toast.error(error.message)
-        console.log(error)
-      }
+      toast.error(error.message)
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -58,15 +52,24 @@ const List = () => {
         </div>
         {/* list */}
         {
-          list.map((item, index)=>(
+          list.map((item, index) => (
             <div className='grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 py-1 px-2 border border-gray-300 text-sm' key={index}>
               <img className='w-12' src={item.image} alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
-              <p>{currency} {item.price}</p>
+              {/* Handle Multiple Prices */}
+              <p>
+                {Array.isArray(item.price) 
+                  ? item.price.map((p, i) => (
+                      <span key={i}>
+                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(p)}
+                        {i !== item.price.length - 1 && ", "}
+                      </span>
+                    ))
+                  : new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.price)}
+              </p>
               <p onClick={() => handleDelete(item._id)} className='text-right md:text-center cursor-pointer hover:text-red-500 text-lg'>x</p>
             </div>
-
           ))
         }
       </div>

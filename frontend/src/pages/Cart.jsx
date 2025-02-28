@@ -1,67 +1,134 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
-import Title from '../components/Title'
-import CartTotal from '../components/CartTotal';
-import { toast } from 'react-toastify';
-
+import React, { useContext, useEffect, useState } from "react";
+import { ShopContext } from "../context/ShopContext";
+import Title from "../components/Title";
+import CartTotal from "../components/CartTotal";
+import { toast } from "react-toastify";
 
 function Cart() {
-  const{products,currency,cartItems,updateQuantity, navigate, getCartAmount} = useContext(ShopContext);
-
+  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
+
   useEffect(() => {
-if(products.length > 0){
-  const tempData = [];
-    for(const items in cartItems){
-      for(const item in cartItems[items]){
-          if(cartItems[items][item]>0){
-            tempData.push({_id:items,size:item,quantity:cartItems[items][item]});
-          }
-      }
-    }
-    setCartData(tempData);
+
+
+    if (products.length > 0) {
+      const tempData = [];
+
+      for (const itemId in cartItems) {
+
+        const productData = products.find((p) => p._id === itemId);
+
+        if (!productData) {
+          continue;
+        }
+
+
+        for (const size in cartItems[itemId]) {
+          const quantity = Number(cartItems[itemId][size]) || 0;
+
+          if (quantity > 0) {
+            //  FIX: Ensure correct price retrieval 
+            let price = 0;
+//////////////////////////////////////////////////////////////////////////////////////////////
+if (Array.isArray(productData.price)) {
+
+  // Define a size mapping (update this according to your database)
+  const sizeMapping = ["100g", "200g", "250g", "500g"]; // Example
+
+  const index = sizeMapping.indexOf(size);
+  if (index !== -1 && productData.price[index] !== undefined) {
+    price = parseFloat(productData.price[index]);
+  } else {
+  }
+} else {
+  price = parseFloat(productData.price) || 0;
 }
-}, [cartItems, products])
+
+
+
+
+            tempData.push({
+              _id: itemId,
+              size,
+              quantity,
+              price,
+              image: productData.image?.[0] || "",
+              name: productData.name || "Unknown Product",
+            });
+          }
+        }
+      }
+
+      setCartData(tempData);
+    }
+  }, [cartItems, products]);
 
   return (
-    <div className='border-t pt-14'>
-      <div className='text-2xl mb-3'>
-        <Title text1={"YOUR"} text2={"CART"} /> 
+    <div className="border-t pt-14">
+      <div className="text-2xl mb-3">
+        <Title text1="YOUR" text2="CART" />
       </div>
       <div>
-        {
-          cartData.map((item,index) => {
-            const productData = products.find((product)=> product._id === item._id);
-            return(
-              <div key={index} className='flex justify-between items-center border-b py-4 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 gap-4 '>
-                <div className='flex items-center gap-6'>
-                  <img className='w-16 sm:w-20 md:w-24 lg:w-28 xl:w-32 2xl:w-36' src={productData.image[0]} alt="" />
-                  <div>
-                    <p className='text-xs sm:text-lg font-medium'>{productData.name}</p>
-                    <div className='flex items-center gap-2'>
-                      <p >{currency}{productData.price}</p>
-                      <p className='px-2 sm:px-3 sm:py-1 border bg-gray-100'>{item.size}</p>
-                    </div>
+        {cartData.map((item, index) => {
+          const totalPrice = (item.price * item.quantity).toFixed(2);
+
+          return (
+            <div key={index} className="flex justify-between items-center border-b py-4 px-2 sm:px-4">
+              <div className="flex items-center gap-6">
+                <img className="w-16 sm:w-20" src={item.image} alt={item.name} />
+                <div>
+                  <p className="text-xs sm:text-lg font-medium">{item.name}</p>
+                  <div className="flex items-center gap-2">
+                    <p>{currency}{item.price} × {item.quantity} = <b>{currency}{totalPrice}</b></p>
+                    <p className="px-2 sm:px-3 sm:py-1 border bg-gray-100">{item.size}</p>
                   </div>
                 </div>
-                <input onChange={(e) => e.target.value === "" || e.target.value === "0" ? null : updateQuantity(item._id,item.size,Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number"  min={1} defaultValue={item.quantity} />
-                <img onClick={() => updateQuantity(item._id,item.size,-1)} className='w-4 mr-4 cursor-pointer' src="https://img.icons8.com/?size=100&id=8329&format=png&color=000000" alt="" />
               </div>
-            )
-          }
-          )
-}
+
+              <input
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  if (value > 0) updateQuantity(item._id, item.size, value);
+                }}
+                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
+                type="number"
+                min={1}
+                defaultValue={item.quantity}
+              />
+
+              <img
+                onClick={() => updateQuantity(item._id, item.size, 0)}
+                className="w-4 mr-4 cursor-pointer"
+                src="https://img.icons8.com/?size=100&id=8329&format=png&color=000000"
+                alt="Remove"
+              />
+            </div>
+          );
+        })}
       </div>
-      <div className='flex justify-end my-20'>
-        <div className='w-full sm:w-[450px]'>
-          <CartTotal />
-          <div className='mt-4'>
-          <button onClick={() => getCartAmount() < 400 ? toast.error("Minimum Order Value is Rs. 500") : navigate("/placeorder")} className='bg-black text-white w-full py-2'>PLACE ORDER</button>
+
+      <div className="flex justify-end my-20">
+        <div className="w-full sm:w-[450px]">
+          <CartTotal cartData={cartData} currency={currency} />
+          <div className="mt-4">
+            <button
+              onClick={() => {
+                const cartAmount = cartData.reduce((total, item) => total + item.price * item.quantity, 0);
+                if (cartAmount < 400) {
+                  toast.error("Minimum Order Value is Rs. 400");
+                } else {
+                  navigate("/placeorder");
+                }
+              }}
+              className="bg-black text-white w-full py-2"
+            >
+              PLACE ORDER
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Cart
+export default Cart;
