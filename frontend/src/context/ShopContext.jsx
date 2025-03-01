@@ -52,7 +52,7 @@ const ShopContextProvider = (props) => {
     };
     
 
-    /** 🔄 Update item quantity in cart */
+    /**  Update item quantity in cart */
     const updateQuantity = async (itemId, size, quantity) => {
         let cartData = { ...cartItems };
         cartData[itemId] = { ...cartData[itemId], [size]: quantity };
@@ -68,7 +68,7 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    /** 🧮 Get total items count in cart */
+    /**  Get total items count in cart */
     const getCartCount = () => {
         return Object.values(cartItems).reduce(
             (total, sizes) => total + Object.values(sizes).reduce((sum, qty) => sum + qty, 0),
@@ -76,7 +76,7 @@ const ShopContextProvider = (props) => {
         );
     };
 
-    /** 💰 Get total cart amount */
+    /**  Get total cart amount */
     const getCartAmount = () => {
         return Object.entries(cartItems).reduce((total, [itemId, sizes]) => {
             let productData = products.find((p) => p._id === itemId);
@@ -88,7 +88,7 @@ const ShopContextProvider = (props) => {
         }, 0);
     };
 
-    /** 📦 Fetch all products */
+    /**  Fetch all products */
     const getProducts = async () => {
         try {
             const res = await axios.get(`${backendUrl}/api/product/list`);
@@ -103,7 +103,7 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    /** 🛍 Fetch user's cart data */
+    /**  Fetch user's cart data */
     const getUserCart = async (token) => {
         try {
             const res = await axios.post(`${backendUrl}/api/cart/get`, {}, { headers: { token } });
@@ -112,7 +112,7 @@ const ShopContextProvider = (props) => {
                 // Ensure `cartData` is an object
                 const formattedCart = res.data.cartData || {};  
                 setCartItems(formattedCart);
-                console.log("Cart Loaded:", formattedCart);
+               // console.log("Cart Loaded:", formattedCart);
             } else {
                 toast.error(res.data.message);
             }
@@ -123,12 +123,12 @@ const ShopContextProvider = (props) => {
     };
     
 
-    /** ⏳ Fetch products on mount */
+    /**  Fetch products on mount */
     useEffect(() => {
         getProducts();
     }, []);
 
-    /** 🔑 Fetch cart if token exists */
+    /**  Fetch cart if token exists */
     useEffect(() => {
         if (token) {
             getUserCart(token);

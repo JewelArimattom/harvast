@@ -35,6 +35,7 @@ const Product = () => {
 // Ensure correct price based on selected size
 const selectedIndex = productdata.sizes.indexOf(size);
 const selectedPrice = productdata.price?.[selectedIndex] || productdata.price?.[0] || 0;
+const selectedOldPrice = productdata.oldPrice?.[selectedIndex] || productdata.oldPrice?.[0] || 0;
 
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -56,8 +57,8 @@ const selectedPrice = productdata.price?.[selectedIndex] || productdata.price?.[
         <div className="flex-1">
           <h1 className="text-2xl font-medium mt-2 text-black">{productdata.name}</h1>
           <p className="text-black mt-5 text-3xl font-medium">{currency} {selectedPrice.toFixed(2)}</p>
-
-          <p className="mt-5 text-gray-500 md:w-4/5">{productdata.description}</p>
+          <p className="text-gray-500 mt-2 line-through font-medium">{currency} {selectedOldPrice.toFixed(2)}</p>
+          <p>{productdata.description}</p>
 
           {/* Size Selection */}
           <div className="flex flex-col gap-4 my-8">

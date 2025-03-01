@@ -17,7 +17,7 @@ const getUserIdFromToken = (req) => {
 const addProductToCart = async (req, res) => {
     try {
         const userId = getUserIdFromToken(req);
-        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized" });
+        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized , Please Relogin" });
 
         const { itemId, size } = req.body;
         const userData = await userModel.findById(userId);
@@ -42,7 +42,7 @@ const addProductToCart = async (req, res) => {
 const updateCartItemQuantity = async (req, res) => {
     try {
         const userId = getUserIdFromToken(req);
-        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized" });
+        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized , Please Relogin" });
 
         const { itemId, size, quantity } = req.body;
         const userData = await userModel.findById(userId);
@@ -66,7 +66,7 @@ const updateCartItemQuantity = async (req, res) => {
 const getUserCart = async (req, res) => {
     try {
         const userId = getUserIdFromToken(req);
-        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized" });
+        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized , Please Relogin" });
 
         const userData = await userModel.findById(userId);
         if (!userData) return res.status(404).json({ success: false, message: "User not found" });
