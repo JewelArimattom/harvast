@@ -22,7 +22,7 @@ const CartTotal = ({ cartData = [], currency }) => {
       <div className="text-2xl">
         <Title text1="TOTAL" text2="PRICE" />
       </div>
-      
+      <p className="bg-green-200 p-2 ">Order above Rs 1500 for free delivery</p>
       {subtotal > 0 && subtotal < 400 && (
         <p className="text-sm text-red-500 bg-red-100 p-2 mt-2">
           Minimum Order Value should be more than Rs. 400

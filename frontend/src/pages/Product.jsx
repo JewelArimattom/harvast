@@ -1,41 +1,54 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { ShopContext } from '../context/ShopContext';
-import RelatedProduct from '../components/relatedProduct';
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
+import { ShopContext } from "../context/ShopContext";
+import RelatedProduct from "../components/relatedProduct";
 
 const Product = () => {
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
+
+  // Ensure products is always an array
+  const productsArray = Array.isArray(products) ? products : [];
+
+  // State for product data, selected image, and size
   const [productdata, setProductdata] = useState(null);
-  const [image, setImage] = useState("");
+  const [imageIndex, setImageIndex] = useState(0); // Track the current image index
   const [size, setSize] = useState("");
 
-  const fetchProduct = () => {
-    const foundProduct = products.find((item) => item._id === productId);
+  // Load product data
+  useEffect(() => {
+    const foundProduct = productsArray.find((item) => item._id === productId);
     if (foundProduct) {
       setProductdata(foundProduct);
-      setImage(foundProduct.image[0]);
-      
-      // Set default size (first size option)
+      setImageIndex(0); // Start with the first image
       if (foundProduct.sizes?.length > 0) {
         setSize(foundProduct.sizes[0]);
       }
     }
-  };
+  }, [productId, productsArray]);
 
-  useEffect(() => {
-    fetchProduct();
-  }, [productId, products]);
+  // Swipe handlers for mobile screens
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      // Swipe left: go to the next image
+      setImageIndex((prev) => (prev + 1) % productdata.image.length);
+    },
+    onSwipedRight: () => {
+      // Swipe right: go to the previous image
+      setImageIndex((prev) => (prev - 1 + productdata.image.length) % productdata.image.length);
+    },
+    preventScrollOnSwipe: true, // Prevent scrolling while swiping
+    trackMouse: true, // Enable mouse swiping for desktop testing
+  });
 
-  if (!productdata) {
+  if (!productdata || !productdata.image) {
     return <div className="text-center text-2xl font-bold text-gray-600 animate-pulse">Loading...</div>;
   }
 
-  // 🛒 Multi-Price Handling
-// Ensure correct price based on selected size
-const selectedIndex = productdata.sizes.indexOf(size);
-const selectedPrice = productdata.price?.[selectedIndex] || productdata.price?.[0] || 0;
-const selectedOldPrice = productdata.oldPrice?.[selectedIndex] || productdata.oldPrice?.[0] || 0;
+  const selectedIndex = productdata.sizes?.indexOf(size) ?? 0;
+  const selectedPrice = productdata.price?.[selectedIndex] ?? productdata.price?.[0] ?? 0;
+  const selectedOldPrice = productdata.oldPrice?.[selectedIndex] ?? productdata.oldPrice?.[0] ?? 0;
 
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -43,13 +56,37 @@ const selectedOldPrice = productdata.oldPrice?.[selectedIndex] || productdata.ol
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
         {/* Product Image Section */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+          {/* Thumbnails for Desktop */}
+          <div className="hidden sm:flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
             {productdata.image.map((item, index) => (
-              <img onClick={() => setImage(item)} src={item} key={index} className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer" alt={productdata.name} />
+              <img 
+                onClick={() => setImageIndex(index)} 
+                src={item} 
+                key={index} 
+                className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer" 
+                alt={productdata.name} 
+              />
             ))}
           </div>
-          <div className="w-full sm:w-[80%]">
-            <img className="w-full h-auto" src={image} alt={productdata.name} />
+
+          {/* Main Image with Swipe Gesture for Mobile */}
+          <div className="w-full sm:w-[80%] relative" {...handlers}>
+            <img 
+              className="w-full h-auto" 
+              src={productdata.image[imageIndex]} 
+              alt={productdata.name} 
+            />
+            {/* Swipe Dots for Mobile */}
+            <div className="sm:hidden flex justify-center mt-3">
+              {productdata.image.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 w-2 mx-1 rounded-full ${
+                    index === imageIndex ? "bg-black" : "bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -68,7 +105,9 @@ const selectedOldPrice = productdata.oldPrice?.[selectedIndex] || productdata.ol
                 <button 
                   onClick={() => setSize(item)} 
                   key={index} 
-                  className={`border py-2 px-4 bg-white hover:bg-gray-200 ${item === size ? "border-black text-red-500 bg-gray" : ""}`}
+                  className={`border py-2 px-4 bg-white hover:bg-gray-200 ${
+                    item === size ? "border-black text-red-500 bg-gray" : ""
+                  }`}
                 >
                   {item}
                 </button>

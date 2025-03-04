@@ -5,7 +5,7 @@ import CartTotal from "../components/CartTotal";
 import { toast } from "react-toastify";
 
 function Cart() {
-  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate,token } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ if (Array.isArray(productData.price)) {
           const totalPrice = (item.price * item.quantity).toFixed(2);
 
           return (
-            <div key={index} className="flex justify-between items-center border-b py-4 px-2 sm:px-4">
+            <div key={index} className="flex gap-4 justify-between items-center border-b py-4 px-2 sm:px-4">
               <div className="flex items-center gap-6">
                 <img className="w-16 sm:w-20" src={item.image} alt={item.name} />
                 <div>
@@ -85,12 +85,12 @@ if (Array.isArray(productData.price)) {
                 </div>
               </div>
 
-              <input
+              <input 
                 onChange={(e) => {
                   const value = Number(e.target.value);
                   if (value > 0) updateQuantity(item._id, item.size, value);
                 }}
-                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
+                className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1 flex items-center justify-center"
                 type="number"
                 min={1}
                 defaultValue={item.quantity}
@@ -98,7 +98,7 @@ if (Array.isArray(productData.price)) {
 
               <img
                 onClick={() => updateQuantity(item._id, item.size, 0)}
-                className="w-4 mr-4 cursor-pointer"
+                className="w-4 mr-4 cursor-pointer sm:w-6 flex"
                 src="https://img.icons8.com/?size=100&id=8329&format=png&color=000000"
                 alt="Remove"
               />
@@ -117,7 +117,12 @@ if (Array.isArray(productData.price)) {
                 if (cartAmount < 400) {
                   toast.error("Minimum Order Value is Rs. 400");
                 } else {
-                  navigate("/placeorder");
+                  if(!token) {
+                    navigate("/login");
+                    toast.error("Please login to place an order");
+                  } else {
+                    navigate("/placeorder");
+                  }
                 }
               }}
               className="bg-black text-white w-full py-2"
