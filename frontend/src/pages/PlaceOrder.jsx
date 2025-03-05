@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; //  Ensure navigation works
+import { useNavigate } from "react-router-dom";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { ShopContext } from "../context/ShopContext";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const PlaceOrder = () => {
   const { token, setCartItems, cartItems, backendUrl, products, currency } = useContext(ShopContext);
-  const navigate = useNavigate(); //  Correctly initialized
+  const navigate = useNavigate();
   const [method, setMethod] = useState("cod");
   const [cartData, setCartData] = useState([]);
   const [formData, setFormData] = useState({
@@ -24,7 +24,23 @@ const PlaceOrder = () => {
     phone: "",
   });
 
-  //  Generate cartData properly
+  // Function to calculate price based on size
+  const getPriceForSize = (productData, size) => {
+    if (!productData || !productData.sizes || !productData.price) return 0;
+
+    // Find the index of the size in the sizes array
+    const sizeIndex = productData.sizes.indexOf(size);
+
+    // If the size is found and the price array has a corresponding value, return it
+    if (sizeIndex !== -1 && productData.price[sizeIndex] !== undefined) {
+      return parseFloat(productData.price[sizeIndex]);
+    }
+
+    // Fallback: Use the first price if no size-specific price is found
+    return parseFloat(productData.price[0]) || 0;
+  };
+
+  // Generate cartData properly
   useEffect(() => {
     if (products.length > 0) {
       const tempData = [];
@@ -34,25 +50,7 @@ const PlaceOrder = () => {
           if (quantity > 0) {
             const productData = products.find((product) => product._id === itemId);
             if (productData) {
-             
-              let price = 0;
-
-              //  Ensure correct price mapping per size
-              if (Array.isArray(productData.price)) {
-                
-              
-                // Define a size mapping (update this according to your database)
-                const sizeMapping = ["100g", "200g", "250g", "500g"]; // Example
-              
-                const index = sizeMapping.indexOf(size);
-                if (index !== -1 && productData.price[index] !== undefined) {
-                  price = parseFloat(productData.price[index]);
-                } else {
-                }
-              } else {
-                price = parseFloat(productData.price) || 0;
-              }
-              
+              const price = getPriceForSize(productData, size); // Use the improved function
 
               tempData.push({
                 _id: itemId,
@@ -68,7 +66,7 @@ const PlaceOrder = () => {
       }
       setCartData(tempData);
     } else {
-      setCartData([]); //  Handle empty cart
+      setCartData([]); // Handle empty cart
     }
   }, [cartItems, products]);
 
@@ -95,10 +93,9 @@ const PlaceOrder = () => {
       paymentMethod: method,
     };
 
-
     try {
       const res = await axios.post(`${backendUrl}/api/order/place`, orderData, {
-        headers: { token }, //  Proper header
+        headers: { token },
       });
 
       if (res.data.success) {

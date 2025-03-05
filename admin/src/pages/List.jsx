@@ -1,80 +1,85 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { backendUrl } from '../App'
-import { toast } from 'react-toastify'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { backendUrl, currency } from '../App';
 
-const List = () => {
-  const [list, setList] = useState([])
+const List = ({ token }) => {
+  const [products, setProducts] = useState([]);
 
-  const fetchList = async () => {
-    try {
-      const res = await axios.get(backendUrl + '/api/product/list', { headers: { token: localStorage.getItem('token') } })
-
-      if (res.data.success) {
-        setList(res.data.products)
-      } else {
-        toast.error(res.data.message)
-      }
-    } catch (error) {
-      toast.error(error.message)
-    }
-  }
-
-  const handleDelete = async (id) => {
-    try {
-      const res = await axios.post(backendUrl + '/api/product/remove', { id }, { headers: { token: localStorage.getItem('token') } })
-      if (res.data.success) {
-        toast.success("Product removed successfully")
-        await fetchList()
-      } else {
-        toast.error("Product not removed")
-      }
-    } catch (error) {
-      toast.error(error.message)
-      console.log(error)
-    }
-  }
-
+  // Fetch products from the backend
   useEffect(() => {
-    fetchList()
-  }, [])
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}/api/product/list`, {
+          headers: { token },
+        });
+        if (response.data.success) {
+          setProducts(response.data.products);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, [token]);
 
   return (
-    <>
-      <p className='text-2xl font-semibold mb-2'>All Products</p>
-      <div className='flex flex-col gap-2 '>
-        <div className='hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 bg-gray-200 border border-gray-300'>
-          <b>Image</b>
-          <b>Name</b>
-          <b>Category</b>
-          <b>Price</b>
-          <b className='text-center'>Action</b>
-        </div>
-        {/* list */}
-        {
-          list.map((item, index) => (
-            <div className='grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 py-1 px-2 border border-gray-300 text-sm' key={index}>
-              <img className='w-12' src={item.image} alt="" />
-              <p>{item.name}</p>
-              <p>{item.category}</p>
-              {/* Handle Multiple Prices */}
-              <p>
-                {Array.isArray(item.price) 
-                  ? item.price.map((p, i) => (
-                      <span key={i}>
-                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(p)}
-                        {i !== item.price.length - 1 && ", "}
-                      </span>
-                    ))
-                  : new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.price)}
-              </p>
-              <p onClick={() => handleDelete(item._id)} className='text-right md:text-center cursor-pointer hover:text-red-500 text-lg'>x</p>
+    <div >
+      <h1 className='text-2xl font-bold mb-4'>Product List</h1>
+      <div className='space-y-4'>
+        {products.map((product) => (
+          <div key={product._id} className='p-4 bg-blue-100 shadow rounded'>
+            {/* Product Image */}
+            <div className='flex gap-4'>
+              {product.image?.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`Product ${index + 1}`}
+                  className='w-20 h-20 object-cover rounded'
+                />
+              ))}
             </div>
-          ))
-        }
-      </div>
-    </>
-  )
-}
 
-export default List
+            {/* Product Name */}
+            <h2 className='text-xl font-semibold mt-2'>{product.name}</h2>
+
+            {/* Product Description */}
+            <p className='text-gray-600'>{product.description}</p>
+
+            {/* Product Category */}
+            <p className='text-gray-600'>Category: {product.category}</p>
+
+            {/* Product Sizes, Prices, and Old Prices */}
+            <div className='mt-2'>
+              {product.sizes?.map((size, index) => (
+                <div key={index} className='flex gap-3'>
+                  <p className='font-medium'>{size}:</p>
+                  <p className='text-green-600'>
+                    {currency} {product.price?.[index]?.toFixed(2)}
+                  </p>
+                  <p className='text-red-500 line-through'>
+                    {currency} {product.oldPrice?.[index]?.toFixed(2)}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Edit Button */}
+            <div className='mt-4'>
+              <Link
+                to={`/edit/${product._id}`}
+                className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
+              >
+                Edit
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default List;

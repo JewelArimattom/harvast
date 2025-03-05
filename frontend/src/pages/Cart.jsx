@@ -5,47 +5,29 @@ import CartTotal from "../components/CartTotal";
 import { toast } from "react-toastify";
 
 function Cart() {
-  const { products, currency, cartItems, updateQuantity, navigate,token } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate, token } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-
-
     if (products.length > 0) {
       const tempData = [];
 
       for (const itemId in cartItems) {
-
         const productData = products.find((p) => p._id === itemId);
 
         if (!productData) {
           continue;
         }
 
-
         for (const size in cartItems[itemId]) {
           const quantity = Number(cartItems[itemId][size]) || 0;
 
           if (quantity > 0) {
-            //  FIX: Ensure correct price retrieval 
-            let price = 0;
-//////////////////////////////////////////////////////////////////////////////////////////////
-if (Array.isArray(productData.price)) {
-
-  // Define a size mapping (update this according to your database)
-  const sizeMapping = ["100g", "200g", "250g", "500g"]; // Example
-
-  const index = sizeMapping.indexOf(size);
-  if (index !== -1 && productData.price[index] !== undefined) {
-    price = parseFloat(productData.price[index]);
-  } else {
-  }
-} else {
-  price = parseFloat(productData.price) || 0;
-}
-
-
-
+            // Use the product's sizes array for dynamic size mapping
+            const sizeIndex = productData.sizes?.indexOf(size) ?? -1;
+            const price = sizeIndex !== -1 && productData.price?.[sizeIndex] !== undefined
+              ? parseFloat(productData.price[sizeIndex])
+              : parseFloat(productData.price?.[0]) || 0; // Fallback to the first price
 
             tempData.push({
               _id: itemId,
@@ -85,7 +67,7 @@ if (Array.isArray(productData.price)) {
                 </div>
               </div>
 
-              <input 
+              <input
                 onChange={(e) => {
                   const value = Number(e.target.value);
                   if (value > 0) updateQuantity(item._id, item.size, value);
@@ -117,7 +99,7 @@ if (Array.isArray(productData.price)) {
                 if (cartAmount < 400) {
                   toast.error("Minimum Order Value is Rs. 400");
                 } else {
-                  if(!token) {
+                  if (!token) {
                     navigate("/login");
                     toast.error("Please login to place an order");
                   } else {
