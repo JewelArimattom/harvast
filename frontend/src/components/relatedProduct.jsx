@@ -16,7 +16,7 @@ const RelatedProduct = ({category}) => {
         if(products.length > 0) {
             let productsCopy = products;
             productsCopy = productsCopy.filter((item) => category === item.category);
-            setRelatedProducts(productsCopy.slice([Math.floor(Math.random() * productsCopy.length)], 6));
+            setRelatedProducts(productsCopy.slice(0, 6));
         }
     }, [products])
   return (
