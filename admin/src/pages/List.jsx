@@ -2,30 +2,53 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { backendUrl, currency } from '../App';
+import { toast } from 'react-toastify';
 
 const List = ({ token }) => {
   const [products, setProducts] = useState([]);
 
   // Fetch products from the backend
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${backendUrl}/api/product/list`, {
-          headers: { token },
-        });
-        if (response.data.success) {
-          setProducts(response.data.products);
-        }
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
     fetchProducts();
   }, [token]);
 
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/product/list`, {
+        headers: { token },
+      });
+      if (response.data.success) {
+        setProducts(response.data.products);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  // Handle product removal
+  const handleRemove = async (productId) => {
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/product/remove`,
+        { id: productId },
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        toast.success('Product removed successfully');
+        // Update the UI by removing the product from the state
+        setProducts(products.filter((product) => product._id !== productId));
+      } else {
+        toast.error('Failed to remove product');
+      }
+    } catch (error) {
+      console.error('Error removing product:', error);
+      toast.error('Something went wrong. Please try again.');
+    }
+  };
+
   return (
-    <div >
+    <div>
       <h1 className='text-2xl font-bold mb-4'>Product List</h1>
       <div className='space-y-4'>
         {products.map((product) => (
@@ -66,14 +89,20 @@ const List = ({ token }) => {
               ))}
             </div>
 
-            {/* Edit Button */}
-            <div className='mt-4'>
+            {/* Edit and Remove Buttons */}
+            <div className='mt-4 flex gap-3'>
               <Link
                 to={`/edit/${product._id}`}
                 className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
               >
                 Edit
               </Link>
+              <button
+                onClick={() => handleRemove(product._id)}
+                className='bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600'
+              >
+                Remove
+              </button>
             </div>
           </div>
         ))}
