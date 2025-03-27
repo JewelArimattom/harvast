@@ -106,8 +106,12 @@ const PlaceOrder = () => {
       {/* Left Section - Address Form */}
       <div className="flex flex-col gap-6 w-full lg:max-w-[600px]">
         <div className="text-2xl mb-2">
-          <Title text1="YOUR" text2="ADDRESS" textColor="text-white" accentColor="text-red-400" />
-        </div>
+        <div className='flex items-center gap-2 mt-4'>
+                            <div className='w-8 md:w-11 h-[1px] bg-red-600'></div>
+                            <p className='font-semibold text-xl md:text-xl  text-white'>YOUR</p>
+                            <p className='font-semibold text-xl md:text-xl text-red-500'>ADDRESS</p>
+                            <div className='w-8 md:w-11 h-[1px] bg-red-600'></div>
+                        </div>        </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1">
