@@ -57,7 +57,7 @@ function OurPolicy() {
 
         {/* Decorative Spice Elements */}
         <div className="hidden md:flex justify-center mt-16 space-x-8">
-          {['Pepper', 'Cardamom', 'Turmeric', 'Clove'].map((spice, index) => (
+          {['Pepper', 'Cardamom', 'karuvapatta', 'Clove'].map((spice, index) => (
             <div key={index} className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-red-600 mr-2"></div>
               <span className="text-sm text-gray-400 font-medium">{spice}</span>
