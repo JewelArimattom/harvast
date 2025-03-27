@@ -24,23 +24,15 @@ const PlaceOrder = () => {
     phone: "",
   });
 
-  // Function to calculate price based on size
   const getPriceForSize = (productData, size) => {
     if (!productData || !productData.sizes || !productData.price) return 0;
-
-    // Find the index of the size in the sizes array
     const sizeIndex = productData.sizes.indexOf(size);
-
-    // If the size is found and the price array has a corresponding value, return it
     if (sizeIndex !== -1 && productData.price[sizeIndex] !== undefined) {
       return parseFloat(productData.price[sizeIndex]);
     }
-
-    // Fallback: Use the first price if no size-specific price is found
     return parseFloat(productData.price[0]) || 0;
   };
 
-  // Generate cartData properly
   useEffect(() => {
     if (products.length > 0) {
       const tempData = [];
@@ -50,8 +42,7 @@ const PlaceOrder = () => {
           if (quantity > 0) {
             const productData = products.find((product) => product._id === itemId);
             if (productData) {
-              const price = getPriceForSize(productData, size); // Use the improved function
-
+              const price = getPriceForSize(productData, size);
               tempData.push({
                 _id: itemId,
                 size,
@@ -66,7 +57,7 @@ const PlaceOrder = () => {
       }
       setCartData(tempData);
     } else {
-      setCartData([]); // Handle empty cart
+      setCartData([]);
     }
   }, [cartItems, products]);
 
@@ -111,57 +102,203 @@ const PlaceOrder = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
+    <form onSubmit={onSubmitHandler} className="flex flex-col lg:flex-row justify-between gap-8 pt-14 min-h-[80vh] border-t border-red-600 bg-black text-white p-4 sm:p-8">
       {/* Left Section - Address Form */}
-      <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
-        <div className="text-xl sm:text-2xl my-3">
-          <Title text1="YOUR" text2="ADDRESS" />
+      <div className="flex flex-col gap-6 w-full lg:max-w-[600px]">
+        <div className="text-2xl mb-2">
+          <Title text1="YOUR" text2="ADDRESS" textColor="text-white" accentColor="text-red-400" />
         </div>
-        <div className="flex gap-3">
-          <input onChange={handleChange} name="fname" value={formData.fname} required type="text" placeholder="First Name" className="border px-3 py-2 w-full" />
-          <input onChange={handleChange} name="lname" value={formData.lname} required type="text" placeholder="Last Name" className="border px-3 py-2 w-full" />
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">First Name</label>
+            <input 
+              onChange={handleChange} 
+              name="fname" 
+              value={formData.fname} 
+              required 
+              type="text" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
+          
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">Last Name</label>
+            <input 
+              onChange={handleChange} 
+              name="lname" 
+              value={formData.lname} 
+              required 
+              type="text" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
         </div>
-        <input onChange={handleChange} name="address" value={formData.address} required type="text" placeholder="Address" className="border px-3 py-2 w-full" />
-        <input onChange={handleChange} name="address2" value={formData.address2} type="text" placeholder="Address Line 2 (Optional)" className="border px-3 py-2 w-full" />
-        <div className="flex gap-3">
-          <input onChange={handleChange} name="city" value={formData.city} required type="text" placeholder="City" className="border px-3 py-2 w-full" />
-          <input onChange={handleChange} name="state" value={formData.state} required type="text" placeholder="State" className="border px-3 py-2 w-full" />
-          <input onChange={handleChange} name="pincode" value={formData.pincode} required type="text" placeholder="Pin Code" className="border px-3 py-2 w-full" />
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm text-gray-300">Address</label>
+          <input 
+            onChange={handleChange} 
+            name="address" 
+            value={formData.address} 
+            required 
+            type="text" 
+            className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
         </div>
-        <input onChange={handleChange} name="country" value={formData.country} required type="text" placeholder="Country" className="border px-3 py-2 w-full" />
-        <div className="flex gap-3">
-          <input onChange={handleChange} name="phone" value={formData.phone} required type="text" placeholder="Phone Number" className="border px-3 py-2 w-full" />
-          <input onChange={handleChange} name="email" value={formData.email} required type="email" placeholder="Email" className="border px-3 py-2 w-full" />
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm text-gray-300">Address Line 2 (Optional)</label>
+          <input 
+            onChange={handleChange} 
+            name="address2" 
+            value={formData.address2} 
+            type="text" 
+            className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">City</label>
+            <input 
+              onChange={handleChange} 
+              name="city" 
+              value={formData.city} 
+              required 
+              type="text" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
+          
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">State</label>
+            <input 
+              onChange={handleChange} 
+              name="state" 
+              value={formData.state} 
+              required 
+              type="text" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
+          
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">Pin Code</label>
+            <input 
+              onChange={handleChange} 
+              name="pincode" 
+              value={formData.pincode} 
+              required 
+              type="text" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm text-gray-300">Country</label>
+          <input 
+            onChange={handleChange} 
+            name="country" 
+            value={formData.country} 
+            required 
+            type="text" 
+            className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">Phone Number</label>
+            <input 
+              onChange={handleChange} 
+              name="phone" 
+              value={formData.phone} 
+              required 
+              type="text" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
+          
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-300">Email</label>
+            <input 
+              onChange={handleChange} 
+              name="email" 
+              value={formData.email} 
+              required 
+              type="email" 
+              className="border border-red-600 bg-gray-900 text-white px-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
         </div>
       </div>
 
       {/* Right Section - Cart Summary & Payment */}
-      <div className="mt-8">
+      <div className="w-full lg:max-w-[450px] mt-8 lg:mt-0">
         {/* Cart Summary */}
         <CartTotal cartData={cartData} currency={currency} />
 
         {/* Payment Method */}
-        <div className="mt-12">
-          <Title text1="PAYMENT" text2="METHOD" />
-          <div className="flex gap-3 flex-col lg:flex-row">
-            <div onClick={() => setMethod("stripe", toast.info("This feature is under development, please use cash on delivery"))} className="flex items-center gap-3 border px-3 py-2 cursor-pointer">
-              <p className={`min-w-3.5 h-3.5 rounded-full border ${method === "stripe" ? "bg-green-500" : ""}`}></p>
+        <div className="mt-8">
+          <div className="text-2xl mb-4">
+            <Title text1="PAYMENT" text2="METHOD" textColor="text-white" accentColor="text-red-400" />
+          </div>
+          
+          <div className="flex flex-col gap-3">
+            <div 
+              onClick={() => setMethod("stripe", toast.info("This feature is under development, please use cash on delivery"))} 
+              className={`flex items-center gap-3 border px-4 py-3 cursor-pointer rounded-lg transition-colors ${
+                method === "stripe" ? "border-red-500 bg-gray-900" : "border-red-600 hover:bg-gray-900"
+              }`}
+            >
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                method === "stripe" ? "border-red-500 bg-red-500" : "border-red-600"
+              }`}>
+                {method === "stripe" && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              </div>
               <p>Credit/Debit Card (Stripe)</p>
             </div>
-            <div onClick={() => setMethod("razorpay", toast.info("This feature is under development, please use cash on delivery"))} className="flex items-center gap-3 border px-3 py-2 cursor-pointer">
-              <p className={`min-w-3.5 h-3.5 rounded-full border ${method === "razorpay" ? "bg-green-500" : ""}`}></p>
+            
+            <div 
+              onClick={() => setMethod("razorpay", toast.info("This feature is under development, please use cash on delivery"))} 
+              className={`flex items-center gap-3 border px-4 py-3 cursor-pointer rounded-lg transition-colors ${
+                method === "razorpay" ? "border-red-500 bg-gray-900" : "border-red-600 hover:bg-gray-900"
+              }`}
+            >
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                method === "razorpay" ? "border-red-500 bg-red-500" : "border-red-600"
+              }`}>
+                {method === "razorpay" && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              </div>
               <p>Razorpay</p>
             </div>
-            <div onClick={() => setMethod("cod")} className="flex items-center gap-3 border px-3 py-2 cursor-pointer">
-              <p className={`min-w-3.5 h-3.5 rounded-full border ${method === "cod" ? "bg-green-500" : ""}`}></p>
+            
+            <div 
+              onClick={() => setMethod("cod")} 
+              className={`flex items-center gap-3 border px-4 py-3 cursor-pointer rounded-lg transition-colors ${
+                method === "cod" ? "border-red-500 bg-gray-900" : "border-red-600 hover:bg-gray-900"
+              }`}
+            >
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                method === "cod" ? "border-red-500 bg-red-500" : "border-red-600"
+              }`}>
+                {method === "cod" && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              </div>
               <p>Cash on Delivery</p>
             </div>
           </div>
         </div>
 
         {/* Place Order Button */}
-        <div className="w-full text-end mt-8">
-          <button type="submit" className="bg-black text-white px-16 py-3 text-sm">Place Order</button>
+        <div className="w-full mt-8">
+          <button 
+            type="submit" 
+            className="bg-red-600 hover:bg-red-700 text-white w-full py-3 rounded-lg font-bold transition-colors"
+          >
+            PLACE ORDER
+          </button>
         </div>
       </div>
     </form>

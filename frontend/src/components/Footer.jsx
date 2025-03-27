@@ -1,46 +1,110 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 const Footer = () => {
-  return (
-    <div className=' text-white '>
-      <div className='flex flex-col sm:grid grid-cols-[3fr,1fr,1fr] gap-14 my-10 mt-40 text-sm'>
-        <div>
-            {/* <img src="" alt="" /> */}
-            <h2 className=' text-2xl font-bold text-black md:text-2xl cursor-pointer mb-5 '>
-        <font>H</font>
-        <font>A</font>
-        <font>R</font>
-        <font>V</font>
-        <font className='text-red-600 lg:text-3xl'>A</font>
-        <font>S</font>
-        <font>T</font>
+  const location = useLocation()
+  
+  // Hide footer on these paths
+  const hiddenPaths = ['/login', '/signup']
+  if (hiddenPaths.includes(location.pathname)) {
+    return null
+  }
 
+  return (
+    <div className='bg-black pt-20 pb-10 px-6 sm:px-10 lg:px-20'>
+      <div className='max-w-7xl mx-auto'>
+        {/* Main Footer Content */}
+        <div className='flex flex-col sm:grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-10 md:gap-16 mb-12'>
+          {/* Brand Info */}
+          <div>
+            <h2 className='text-3xl font-bold text-white mb-6 cursor-pointer'>
+              <span className='inline-block hover:rotate-12 transition-transform duration-300'>H</span>
+              <span className='inline-block hover:-rotate-12 transition-transform duration-300'>A</span>
+              <span className='inline-block hover:rotate-12 transition-transform duration-300'>R</span>
+              <span className='inline-block hover:-rotate-12 transition-transform duration-300'>V</span>
+              <span className='text-red-600 hover:scale-125 transition-transform duration-300'>A</span>
+              <span className='inline-block hover:rotate-12 transition-transform duration-300'>S</span>
+              <span className='inline-block hover:-rotate-12 transition-transform duration-300'>T</span>
             </h2>
-            <p className='w-full md:w-2/3 text-gray-500'>
-            At Harvast, we bring you the rich, authentic flavors of Kerala’s finest spices, straight from nature to your kitchen. Nestled in the heart of India's spice capital, we are committed to delivering fresh, pure, and aromatic spices sourced directly from local farmers.
+            <p className='text-gray-400 mb-6 leading-relaxed'>
+              At Harvast, we bring you the rich, authentic flavors of Kerala's finest spices, straight from nature to your kitchen. Nestled in the heart of India's spice capital, we are committed to delivering fresh, pure, and aromatic spices sourced directly from local farmers.
             </p>
-        </div>
-        <div>
-            <p className='font-semibold text-sm sm:text-base md:text-lg text-black '>COMPANY</p>
-            <ul className='text-gray-500 flex flex-col gap-1'>
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Contact</li>
-                <li>Privacy Policy</li>
+            <div className='flex space-x-4'>
+              {['facebook', 'twitter', 'instagram', 'youtube'].map((social) => (
+                <div key={social} className='w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer'>
+                  <img 
+                    src={`https://img.icons8.com/ios-filled/50/ffffff/${social}.png`} 
+                    className='w-4 h-4' 
+                    alt={social} 
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h3 className='font-bold text-lg text-white mb-4 border-b border-red-600 pb-2'>COMPANY</h3>
+            <ul className='space-y-3'>
+              {['Home', 'About Us', 'Contact', 'Privacy Policy'].map((item) => (
+                <li key={item} className='text-gray-400 hover:text-red-500 transition-colors cursor-pointer'>
+                  {item}
+                </li>
+              ))}
             </ul>
-        </div>
-        <div>
-            <p className='text-x1 font-medium md-5 text-black '>GET IN TOUCH</p>
-            <ul className='text-gray-500 flex flex-col gap-1'>
-                <li>+91 9061336064</li>
-                <li>HARVAST@gmail.com</li>
-                
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className='font-bold text-lg text-white mb-4 border-b border-red-600 pb-2'>GET IN TOUCH</h3>
+            <ul className='space-y-3'>
+              <li className='flex items-center text-gray-400'>
+                <div className='w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-2'>
+                  <img 
+                    src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" 
+                    className='w-3 h-3' 
+                    alt="phone" 
+                  />
+                </div>
+                +91 9061336064
+              </li>
+              <li className='flex items-center text-gray-400'>
+                <div className='w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-2'>
+                  <img 
+                    src="https://img.icons8.com/ios-filled/50/ffffff/mail.png" 
+                    className='w-3 h-3' 
+                    alt="email" 
+                  />
+                </div>
+                HARVAST@gmail.com
+              </li>
+              <li className='flex items-center text-gray-400 mt-4'>
+                <div className='w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-2'>
+                  <img 
+                    src="https://img.icons8.com/ios-filled/50/ffffff/marker.png" 
+                    className='w-3 h-3' 
+                    alt="location" 
+                  />
+                </div>
+                Kerala, India
+              </li>
             </ul>
+          </div>
         </div>
-      </div>
-      <div>
-        <hr className='border border-gray-400'/>
-        <p className='py-5 text-sm text-center text-black '>Copyright &copy; 2023 HARVAST</p>
+
+        {/* Divider & Copyright */}
+        <div className='border-t border-gray-800 pt-6'>
+          <div className='flex flex-col md:flex-row justify-between items-center'>
+            <p className='text-gray-500 text-sm mb-4 md:mb-0'>
+              © {new Date().getFullYear()} HARVAST. All rights reserved.
+            </p>
+            <div className='flex space-x-6'>
+              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'>Terms of Service</span>
+              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'>Privacy Policy</span>
+              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'>Shipping Policy</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

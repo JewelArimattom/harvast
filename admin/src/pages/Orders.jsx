@@ -67,13 +67,14 @@ const Orders = ({ token }) => {
                 <p className='py-0.5'>{order.address.city + ", "} {order.address.state + ", "} {order.address.pincode + ", "} {order.address.country}</p>
               </div>
               <p>{order.address.phone}</p>
-
+              <p>{order.address.email}</p>
             </div>
             <div className='flex flex-col'>
               <p>Iteam : {order.items.length}</p>
               <p>Method : {order.paymentMethod}</p>
               <p>Payment : {order.payment ? "Paid" : "Unpaid"}</p>
               <p>Date : {new Date(order.date).toDateString()}</p>
+              <p>Time : {new Date(order.date).toLocaleTimeString()}</p>
             </div>
             <p >{currency} {order.amount}</p>
             <select onChange={(e) => statusHandler(e,order._id)} value={order.status} className='border-2 p-2 rounded '>
