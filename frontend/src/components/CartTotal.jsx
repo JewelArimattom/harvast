@@ -14,7 +14,7 @@ const CartTotal = ({ cartData = [], currency }) => {
     return total + price * quantity;
   }, 0);
 
-  const deliveryFee = subtotal > 1500 ? 0 : 100;
+  const deliveryFee = subtotal > 1500 ? 0 : 50;
   const grandTotal = subtotal + deliveryFee;
 
   return (
