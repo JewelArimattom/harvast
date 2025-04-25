@@ -75,6 +75,7 @@ const Orders = ({ token }) => {
               <p>Payment : {order.payment ? "Paid" : "Unpaid"}</p>
               <p>Date : {new Date(order.date).toDateString()}</p>
               <p>Time : {new Date(order.date).toLocaleTimeString()}</p>
+              <p>Order Id :  {order._id}</p>
             </div>
             <p >{currency} {order.amount}</p>
             <select onChange={(e) => statusHandler(e,order._id)} value={order.status} className='border-2 p-2 rounded '>
