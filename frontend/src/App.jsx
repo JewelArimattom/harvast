@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import SearchBar from './components/searchBar';
-import ResetPassword from './pages/restetPassword';
+import ResetPassword from './pages/resetPassword';
 
 // Lazy-loaded components
 const Home = lazy(() => import('./pages/Home'));
