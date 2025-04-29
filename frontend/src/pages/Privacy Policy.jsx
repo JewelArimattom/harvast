@@ -41,7 +41,7 @@ const PolicyPage = () => {
                 Data Usage
               </h3>
               <p className="text-gray-300 pl-4">
-                We use your information to process transactions, improve services, communicate with you, and for marketing purposes.
+                We use your information to process transactions, improve services and communicate with you.
               </p>
             </div>
             
@@ -96,7 +96,7 @@ const PolicyPage = () => {
                 Tracking & Costs
               </h3>
               <p className="text-gray-300 pl-4">
-                Tracking provided via email. Costs calculated by weight, dimensions, and destination.
+                Tracking provided via email. Costs calculated by weight, size, and destination.
               </p>
             </div>
           </div>
@@ -178,15 +178,7 @@ const PolicyPage = () => {
               </p>
             </div>
             
-            <div className="group">
-              <h3 className="text-lg font-semibold text-red-300 mb-1 flex items-center">
-                <span className="w-2 h-2 bg-red-500 rounded-full mr-2 group-hover:animate-pulse"></span>
-                Non-Refundable Items
-              </h3>
-              <p className="text-gray-300 pl-4">
-                Digital products, perishables, and personalized items excluded.
-              </p>
-            </div>
+
           </div>
         </section>
       </div>
