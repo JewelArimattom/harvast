@@ -20,8 +20,17 @@ const userSchema = new mongoose.Schema(
             default: {},
    
         },
+        resetPasswordToken: {
+            type: String,
+            select: false
+        },
+        resetPasswordExpires: {
+            type: Date,
+            select: false
+        },
     },
-    { minimize: false }
+    { minimize: false },
+    
 )
 
 const userModel = mongoose.model.user || mongoose.model("user", userSchema)

@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import SearchBar from './components/searchBar';
+import ResetPassword from './pages/restetPassword';
 
 // Lazy-loaded components
 const Home = lazy(() => import('./pages/Home'));
@@ -53,6 +54,7 @@ const App = () => {
           <Route path='/about' element={<About />} />
           <Route path='/product/:productId' element={<Product />} />
           <Route path='/policy' element={<Policy />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
           {/* Fallback Route for 404 Not Found */}
         </Routes>
       </Suspense>
