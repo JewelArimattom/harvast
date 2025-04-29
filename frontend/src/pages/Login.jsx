@@ -24,7 +24,7 @@ const Login = () => {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(backendUrl + '/api/user//forgot-password', { 
+      const response = await axios.post(backendUrl + '/api/user/forgot-password', { 
         email: resetEmail 
       });
       
