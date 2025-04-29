@@ -46,11 +46,10 @@ const Footer = () => {
           <div>
             <h3 className='font-bold text-lg text-white mb-4 border-b border-red-600 pb-2'>COMPANY</h3>
             <ul className='space-y-3'>
-              {['Home', 'About Us', 'Contact', 'Privacy Policy'].map((item) => (
-                <li key={item} className='text-gray-400 hover:text-red-500 transition-colors cursor-pointer'>
-                  {item}
-                </li>
-              ))}
+              <li><a href='/' className='text-gray-400 hover:text-red-600 transition-colors'>Home</a></li>
+              <li><a href='/about' className='text-gray-400 hover:text-red-600 transition-colors'>About Us</a></li>
+              <li><a href='/policy' className='text-gray-400 hover:text-red-600 transition-colors'>Company Policy</a></li>
+              <li><a href='/contact' className='text-gray-400 hover:text-red-600 transition-colors'>Contact</a></li>
             </ul>
           </div>
 
@@ -76,8 +75,7 @@ const Footer = () => {
                     alt="email" 
                   />
                 </div>
-                HARVAST@gmail.com
-              </li>
+                harvastfoodproducts@gmail.com              </li>
               <li className='flex items-center text-gray-400 mt-4'>
                 <div className='w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-2'>
                   <img 

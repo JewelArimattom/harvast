@@ -16,6 +16,7 @@ const Product = lazy(() => import('./pages/Product'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const PlaceOrder = lazy(() => import('./pages/PlaceOrder'));
+const Policy = lazy(() => import('./pages/Privacy Policy'));
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/about' element={<About />} />
           <Route path='/product/:productId' element={<Product />} />
+          <Route path='/policy' element={<Policy />} />
           {/* Fallback Route for 404 Not Found */}
         </Routes>
       </Suspense>
