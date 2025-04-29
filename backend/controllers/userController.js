@@ -192,7 +192,7 @@ const forgotPassword = async (req, res) => {
             await user.save();
 
             // Create secure reset link
-            const resetUrl = `${process.env.FRONTEND_URL}reset-password?token=${resetToken}&id=${user._id}`;
+            const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}&id=${user._id}`;
             
             // Configure email transporter
             const transporter = nodemailer.createTransport({
