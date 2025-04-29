@@ -97,9 +97,9 @@ const Footer = () => {
               © {new Date().getFullYear()} HARVAST. All rights reserved.
             </p>
             <div className='flex space-x-6'>
-              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'>Terms of Service</span>
-              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'>Privacy Policy</span>
-              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'>Shipping Policy</span>
+              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'><a href="/policy">Terms & Conditions</a></span>
+              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'><a href="/policy">Privacy Policy</a></span>
+              <span className='text-gray-500 hover:text-red-500 text-sm cursor-pointer transition-colors'><a href="/policy">Refund Policy</a></span>
             </div>
           </div>
         </div>
