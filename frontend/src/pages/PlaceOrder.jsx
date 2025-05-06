@@ -184,7 +184,12 @@ const PlaceOrder = () => {
         <CartTotal cartData={cartData} currency={currency} />
 
         <div className="mt-8">
-          <Title text1="PAYMENT" text2="METHOD" textColor="text-white" accentColor="text-red-400" />
+          <div className='flex items-center gap-2 mt-4'>
+                            <div className='w-8 md:w-11 h-[1px] bg-red-600'></div>
+                            <p className='font-semibold text-xl md:text-xl  text-white'>PAYMENT</p>
+                            <p className='font-semibold text-xl md:text-xl text-red-600'>METHOD</p>
+                            <div className='w-8 md:w-11 h-[1px] bg-red-600'></div>
+                        </div>
 
           <div className="flex flex-col gap-3 mt-4">
             {["razorpay", "cod"].map((option) => (
