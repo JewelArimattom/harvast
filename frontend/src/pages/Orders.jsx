@@ -113,7 +113,7 @@ const Orders = () => {
   const sendCancellationEmail = () => {
     const subject = encodeURIComponent("Order Cancellation Request");
     const body = encodeURIComponent(`Order ID: ${cancelOrder._id}\nMessage: ${cancelMessage || "Please cancel my order."}`);
-    window.location.href = `mailto:jewelat50@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:harvastfoodproducts@gmail.com?subject=${subject}&body=${body}`;
     closeCancelModal();
   };
 
