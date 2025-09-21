@@ -1,13 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
     const currency = "Rs ";
-    const deliveryFee = 50;
+    const deliveryFee = 0;
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const [search, setSearch] = useState("");
     const [showSearch, setShowSearch] = useState(false);
@@ -47,6 +47,7 @@ const ShopContextProvider = (props) => {
             } catch (error) {
                 console.error("Error adding to cart:", error);
                 toast.error("Failed to add item. Please try again.");
+                NavLink.navigate('/login');
             }
         }
     };
@@ -64,6 +65,7 @@ const ShopContextProvider = (props) => {
             } catch (error) {
                 console.error(error);
                 toast.error("Failed to update quantity", { autoClose: 1000 });
+                NavLink.navigate('/login');
             }
         }
     };
@@ -118,7 +120,8 @@ const ShopContextProvider = (props) => {
             }
         } catch (error) {
             console.error("Error fetching cart:", error);
-            toast.error("Failed to load cart.");
+            toast.error("Failed to fetch cart.");
+            NavLink.navigate('/login');
         }
     };
     

@@ -14,7 +14,7 @@ const CartTotal = ({ cartData = [], currency }) => {
     return total + price * quantity;
   }, 0);
 
-  const deliveryFee = subtotal > 1500 ? 0 : 50;
+  const deliveryFee = subtotal > 1500 ? 0 : 0;
   const grandTotal = subtotal + deliveryFee;
 
   return (
@@ -28,7 +28,7 @@ const CartTotal = ({ cartData = [], currency }) => {
                         </div>
       </div>
       <p className="bg-green-600 p-2 mt-4">Order above Rs 1500 for free delivery</p>
-      {subtotal > 0 && subtotal < 400 && (
+      {subtotal > 0 && subtotal < 1 && (
         <p className="text-sm text-red-500 bg-red-100 p-2 mt-2">
           Minimum Order Value should be more than Rs. 400
         </p>

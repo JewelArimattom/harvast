@@ -150,7 +150,7 @@ function Cart() {
                   <button
                     onClick={() => {
                       const cartAmount = cartData.reduce((total, item) => total + item.price * item.quantity, 0);
-                      if (cartAmount < 400) {
+                      if (cartAmount < 0) {
                         toast.error("Minimum Order Value is Rs. 400");
                       } else {
                         if (!token) {
